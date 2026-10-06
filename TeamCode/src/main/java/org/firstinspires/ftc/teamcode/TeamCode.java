@@ -51,6 +51,8 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name="TeamCode")
 public class TeamCode extends OpMode{
 
+
+    //adf;kshavlkjsbeofw
     //Hey dat wrote this!
     /* Declare OpMode members. */
     public DcMotor  leftDrive   = null;
