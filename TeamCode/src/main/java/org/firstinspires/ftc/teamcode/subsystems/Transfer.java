@@ -22,22 +22,23 @@ public class Transfer extends Subsystem {
 
     }
 
-    public void loop(){
-        if(gamepad1.right_trigger_pressed){
+    public void loop() {
+        if (gamepad1.right_trigger_pressed) {
             transferMotor.setPower(1);
-        } else if(gamepad1.left_trigger_pressed) {
+        } else if (gamepad1.left_trigger_pressed) {
             transferMotor.setPower(-1);
-        } else{
+        } else {
             transferMotor.setPower(0);
         }
 
 
-        if(gamepad1.a){
+        if (gamepad1.a) {
             elapsedTime.reset();
-            telemetry.addLine("yipee");
         }
 
-        if(elapsedTime.seconds() <= SHOOT_TIME){
+        if (gamepad1.y) {
+            shootingMotor.setPower(-1);
+        } else if (elapsedTime.seconds() <= SHOOT_TIME) {
             shootingMotor.setPower(1);
         } else {
             shootingMotor.setPower(0);
