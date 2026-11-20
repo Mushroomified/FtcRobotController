@@ -11,13 +11,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 public abstract class Subsystem {
     protected HardwareMap hardwareMap;
-
     protected Telemetry telemetry;
-
     protected Gamepad gamepad1;
-
     protected Gamepad gamepad2;
-
 
     public void instantiateSubsystem(OpMode opMode){
         this.telemetry = opMode.telemetry;
@@ -26,10 +22,7 @@ public abstract class Subsystem {
         this.gamepad2 = opMode.gamepad2;
     }
 
-
     public abstract void init(OpMode opMode);
-
-
 }
 
 

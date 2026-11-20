@@ -22,16 +22,22 @@ public class Transfer extends Subsystem {
 
     }
 
+    boolean isOpposite = false;
     public void loop(){
-        if(gamepad1.a){
-            elapsedTime.reset();
-            telemetry.addLine("yipee");
-        }
-
-        if(elapsedTime.seconds() <= SHOOT_TIME){
-            motor.setPower(1);
+        if(gamepad1.y){
+            motor.setPower(-1);
+            isOpposite = true;
         } else {
-            motor.setPower(0);
+            if (gamepad1.a) {
+                elapsedTime.reset();
+                isOpposite = false;
+            }
+
+            if (!isOpposite && elapsedTime.seconds() <= SHOOT_TIME) {
+                motor.setPower(1);
+            } else {
+                motor.setPower(0);
+            }
         }
 
     }

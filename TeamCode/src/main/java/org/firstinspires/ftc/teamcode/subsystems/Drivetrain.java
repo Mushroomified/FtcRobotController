@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static android.os.SystemClock.sleep;
+
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.TurnDirection;
 
 
 public class Drivetrain extends Subsystem {
@@ -27,15 +30,12 @@ public class Drivetrain extends Subsystem {
         backLeftDrive = hardwareMap.get(DcMotor.class, "back_left_drive");
         backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
 
-        // We set the left motors in reverse which is needed for drive trains where the left
-        // motors are opposite to the right ones.
+
 //        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
         backRightDrive.setDirection(DcMotor.Direction.REVERSE);
 //        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
 
-        // This uses RUN_USING_ENCODER to be more accurate.   If you don't have the encoder
-        // wires, you should remove these
 //        frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -119,4 +119,68 @@ public class Drivetrain extends Subsystem {
         backLeftDrive.setPower(maxSpeed * (backLeftPower / maxPower));
         backRightDrive.setPower(maxSpeed * (backRightPower / maxPower));
     }
+
+
+    // METHODS FOR AUTONOMOUS
+
+
+    public void driveForward(double power, long milliseconds) {
+        frontLeftDrive.setPower(power);
+        frontRightDrive.setPower(power);
+        backLeftDrive.setPower(power);
+        backRightDrive.setPower(power);
+
+        sleep(milliseconds);
+    }
+
+    public void turnInPlace(TurnDirection turnDirection, double power){
+        if(turnDirection == TurnDirection.RIGHT){
+            power = -power;
+        }
+
+        frontRightDrive.setPower(power);
+        backRightDrive.setPower(power);
+        frontLeftDrive.setPower(-power);
+        backLeftDrive.setPower(-power);
+
+        int ms = (turnDirection == TurnDirection.UTURN) ? 1000 : 500;
+
+        sleep(ms);
+    }
+
+    public void stopMotors() {
+        frontLeftDrive.setPower(0);
+        frontRightDrive.setPower(0);
+        backLeftDrive.setPower(0);
+        backRightDrive.setPower(0);
+    }
+
+
+
+    public void TESTturnInPlace(TurnDirection turnDirection, double power){
+        if(turnDirection == TurnDirection.RIGHT){
+            power = -power;
+        }
+
+        frontRightDrive.setPower(power);
+        backRightDrive.setPower(power);
+        frontLeftDrive.setPower(-power);
+        backLeftDrive.setPower(-power);
+
+    }
+
+    public void TESTMSturnInPlace(TurnDirection turnDirection, double power, int ms){
+        if(turnDirection == TurnDirection.RIGHT){
+            power = -power;
+        }
+
+        frontRightDrive.setPower(power);
+        backRightDrive.setPower(power);
+        frontLeftDrive.setPower(-power);
+        backLeftDrive.setPower(-power);
+
+        sleep(ms);
+    }
 }
+
+

@@ -20,7 +20,7 @@ public class Intake extends Subsystem {
 
     public void loop(){
         if(gamepad1.right_bumper){
-            motor.setPower(1);
+            motor.setPower(0.7);
             leftServo.setPower(1);
             rightServo.setPower(1);
         } else {
