@@ -11,6 +11,7 @@ public class Intake extends Subsystem {
     CRServo leftServo;
     CRServo rightServo;
 
+
     public void init(OpMode opMode){
         this.instantiateSubsystem(opMode);
         motor = hardwareMap.get(DcMotor.class,"intake");
@@ -23,6 +24,7 @@ public class Intake extends Subsystem {
             motor.setPower(0.7);
             leftServo.setPower(1);
             rightServo.setPower(1);
+
         } else {
             motor.setPower(0);
             leftServo.setPower(0);
