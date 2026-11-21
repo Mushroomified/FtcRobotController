@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.TurnDirection;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
-
+@Tele
 public class TurningTest extends OpMode {
 
     Drivetrain drivetrain = new Drivetrain();

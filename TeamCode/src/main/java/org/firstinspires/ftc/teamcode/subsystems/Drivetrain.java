@@ -19,6 +19,8 @@ public class Drivetrain extends Subsystem {
     DcMotor backLeftDrive;
     DcMotor backRightDrive;
 
+    double maxSpeed;
+
     // This declares the IMU needed to get the current direction the robot is facing
     IMU imu;
 
@@ -64,17 +66,21 @@ public class Drivetrain extends Subsystem {
         if (gamepad1.b) {
             imu.resetYaw();
         }
+
+        maxSpeed = !gamepad1.left_bumper ? 1 : 0.4;
         // If you press the left bumper, you get a drive from the point of view of the robot
         // (much like driving an RC vehicle)
-        if (gamepad1.left_bumper) {
-            drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-        } else {
-            driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-        }
+        drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x, maxSpeed);
+//
+//        if (gamepad1.left_bumper) {
+//            drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+//        } else {
+//            driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+//        }
     }
 
     // This routine drives the robot field relative
-    private void driveFieldRelative(double forward, double right, double rotate) {
+    private void driveFieldRelative(double forward, double right, double rotate, double maxSpeed) {
         // First, convert direction being asked to drive to polar coordinates
         double theta = Math.atan2(forward, right);
         double r = Math.hypot(right, forward);
@@ -88,11 +94,11 @@ public class Drivetrain extends Subsystem {
         double newRight = r * Math.cos(theta);
 
         // Finally, call the drive method with robot relative forward and right amounts
-        drive(newForward, newRight, rotate);
+        drive(newForward, newRight, rotate, maxSpeed);
     }
 
     // Thanks to FTC16072 for sharing this code!!
-    public void drive(double forward, double right, double rotate) {
+    public void drive(double forward, double right, double rotate, double maxSpeed) {
         // This calculates the power needed for each wheel based on the amount of forward,
         // strafe right, and rotate
         double frontLeftPower = forward + right + rotate;
@@ -101,7 +107,7 @@ public class Drivetrain extends Subsystem {
         double backLeftPower = forward - right + rotate;
 
         double maxPower = 1.0;
-        double maxSpeed = 1.0;  // make this slower for outreaches
+//        double maxSpeed = 1.0;  // make this slower for outreaches
 
         // This is needed to make sure we don't pass > 1.0 to any wheel
         // It allows us to keep all of the motors in proportion to what they should
